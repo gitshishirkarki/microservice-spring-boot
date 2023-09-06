@@ -48,6 +48,12 @@ class ProductServiceApplicationTests {
 		.andExpect(MockMvcResultMatchers.status().isCreated());
 	}
 
+	@Test
+	void shouldListProduct() throws Exception{
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/product"))
+				.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+
 	private ProductRequest getProductRequest() {
 		return ProductRequest.builder()
 		.name("IPhone 13")
