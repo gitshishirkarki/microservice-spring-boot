@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
     public void placeOrder(OrderRequest orderRequest) {
         Order order = Order.builder()
@@ -34,8 +34,8 @@ public class OrderService {
 
         List<String> skuCodeList = order.getOrderLineItemsList().stream().map(OrderLineItems::getSkuCode).collect(Collectors.toList());
         // call inventory service and create order if inventory is present in stock
-        InventoryResponse[] inventoryResponses = webClient.get()
-                .uri("http://localhost:8082/api/inventory",
+        InventoryResponse[] inventoryResponses = webClientBuilder.build().get()
+                .uri("http://inventory-service/api/inventory",
                         uriBuilder -> uriBuilder.queryParam("skuCode", skuCodeList).build())
                 .retrieve()
                 .bodyToMono(InventoryResponse[].class)
