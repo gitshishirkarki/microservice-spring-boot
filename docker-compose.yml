@@ -33,7 +33,10 @@ services:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     volumes:
       - dbdata6:/data/db
-
+  zipkin-docker:
+    image: "openzipkin/zipkin"
+    ports:
+      - "9411:9411"
 volumes:
   mysqldb:
   dbdata6:
