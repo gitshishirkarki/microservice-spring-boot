@@ -24,7 +24,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final WebClient.Builder webClientBuilder;
 
-    public void placeOrder(OrderRequest orderRequest) {
+    public String placeOrder(OrderRequest orderRequest) {
         Order order = Order.builder()
                 .orderNumber(UUID.randomUUID().toString())
                 .build();
@@ -45,6 +45,7 @@ public class OrderService {
             boolean isInStock = Arrays.stream(inventoryResponses).allMatch(InventoryResponse::isInStock);
             if (isInStock) {
                 orderRepository.save(order);
+                return "Order Placed Successfully.";
             }
         }
 
