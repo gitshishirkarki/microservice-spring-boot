@@ -7,12 +7,14 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/order")
@@ -25,6 +27,7 @@ public class OrderController {
     @TimeLimiter(name = "inventory")
     @Retry(name = "inventory")
     public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest) {
+        log.info("Order Requested.");
         return CompletableFuture.supplyAsync(() -> orderService.placeOrder(orderRequest));
     }
 
