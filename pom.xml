@@ -12,7 +12,7 @@
 
     <groupId>com.shishir</groupId>
     <artifactId>microservice-spring-boot</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -77,6 +77,18 @@
                         <version>6.2</version> <!-- Use newer version of ASM -->
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <from>
+                        <image>
+                            eclipse-temurin:17.0.4.1_1-jre
+                        </image>
+                    </from>
+                </configuration>
             </plugin>
         </plugins>
     </build>
